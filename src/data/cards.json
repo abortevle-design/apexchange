@@ -1,0 +1,5 @@
+[
+  { "id": "card-1", "brand": "visa", "type": "Debit", "name": "Sandra Bullock", "last4": "4821", "expiry": "09/28", "status": "active", "limitDaily": 2000, "limitMonthly": 10000, "spentMonthly": 3120.44, "linkedAccount": "Girokonto", "color": "navy" },
+  { "id": "card-2", "brand": "mastercard", "type": "Credit", "name": "Sandra Bullock", "last4": "7734", "expiry": "03/27", "status": "active", "limitDaily": 3000, "limitMonthly": 15000, "spentMonthly": 34460.12, "linkedAccount": "Kreditkartenkonto", "color": "gold" },
+  { "id": "card-3", "brand": "visa", "type": "Debit", "name": "Sandra Bullock", "last4": "1190", "expiry": "11/26", "status": "frozen", "limitDaily": 1000, "limitMonthly": 5000, "spentMonthly": 0, "linkedAccount": "Geschäftskonto", "color": "slate" }
+]

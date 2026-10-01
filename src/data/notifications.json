@@ -1,0 +1,8 @@
+[
+  { "id": "n1", "type": "security", "titleKey": "notifNewLoginTitle", "bodyKey": "notifNewLoginBody", "date": "2026-07-13T08:12:00", "read": false },
+  { "id": "n2", "type": "transfer", "titleKey": "notifTransferSentTitle", "bodyKey": "notifTransferSentBody", "date": "2026-07-12T17:40:00", "read": false },
+  { "id": "n3", "type": "payment", "titleKey": "notifPaymentDueTitle", "bodyKey": "notifPaymentDueBody", "date": "2026-07-11T09:00:00", "read": false },
+  { "id": "n4", "type": "system", "titleKey": "notifMaintenanceTitle", "bodyKey": "notifMaintenanceBody", "date": "2026-07-09T12:00:00", "read": true },
+  { "id": "n5", "type": "security", "titleKey": "notifCardFrozenTitle", "bodyKey": "notifCardFrozenBody", "date": "2026-07-05T14:22:00", "read": true },
+  { "id": "n6", "type": "transfer", "titleKey": "notifTransferReceivedTitle", "bodyKey": "notifTransferReceivedBody", "date": "2026-07-02T10:05:00", "read": true }
+]

@@ -1,0 +1,50 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: light;
+}
+html.dark { color-scheme: dark; }
+
+* { -webkit-font-smoothing: antialiased; }
+
+body {
+  @apply bg-[#F5F6F8] text-navy-900 font-sans;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+html.dark body {
+  @apply bg-[#0A1526] text-slate-100;
+}
+
+::selection { background: #c19a4f55; }
+
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #8195b855; border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: #8195b8aa; }
+
+.glass {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.18);
+}
+
+.card {
+  @apply bg-white dark:bg-navy-800 border border-navy-100/60 dark:border-white/5 rounded-2xl shadow-soft;
+}
+
+.font-tabular { font-variant-numeric: tabular-nums; }
+
+.focus-ring {
+  @apply outline-none focus-visible:ring-2 focus-visible:ring-gold-500 focus-visible:ring-offset-2 focus-visible:ring-offset-white dark:focus-visible:ring-offset-navy-900;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

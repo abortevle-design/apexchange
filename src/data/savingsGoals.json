@@ -1,0 +1,7 @@
+[
+  { "id": "g1", "nameKey": "goalEmergency", "target": 15000, "current": 11250, "color": "#1e8a5f", "icon": "shield" },
+  { "id": "g2", "nameKey": "goalVacation", "target": 4000, "current": 2380, "color": "#c19a4f", "icon": "plane" },
+  { "id": "g3", "nameKey": "goalCar", "target": 22000, "current": 8600, "color": "#2c4266", "icon": "car" },
+  { "id": "g4", "nameKey": "goalHouse", "target": 80000, "current": 34500, "color": "#4f6690", "icon": "home" },
+  { "id": "g5", "nameKey": "goalEducation", "target": 6000, "current": 4950, "color": "#c23b3b", "icon": "book" }
+]

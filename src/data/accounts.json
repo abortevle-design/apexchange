@@ -1,0 +1,6 @@
+[
+  { "id": "acc-checking", "type": "checking", "name": "Girokonto", "iban": "DE89 3704 0044 0532 0130 00", "accountNumber": "5320130", "balance": 2800000.00, "currency": "USD", "status": "active" },
+  { "id": "acc-savings", "type": "savings", "name": "Tagesgeldkonto", "iban": "DE12 5001 0517 0648 4898 90", "accountNumber": "6484898", "balance": 1466990.00, "currency": "USD", "status": "active" },
+  { "id": "acc-investment", "type": "investment", "name": "Depot", "iban": "DE55 5001 0517 0648 4899 01", "accountNumber": "6484899", "balance": 797320.85, "currency": "USD", "status": "active" },
+  { "id": "acc-business", "type": "business", "name": "Geschäftskonto", "iban": "DE22 5001 0517 0912 3456 78", "accountNumber": "9123456", "balance": 55990.10, "currency": "USD", "status": "active" }
+]

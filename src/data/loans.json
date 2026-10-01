@@ -1,0 +1,6 @@
+[
+  { "id": "l1", "typeKey": "loanMortgage", "principal": 320000, "balance": 261400, "interestRate": 3.2, "monthlyPayment": 1420.50, "nextPaymentDate": "2026-08-01", "termEnd": "2046-05-01" },
+  { "id": "l2", "typeKey": "loanCar", "principal": 28000, "balance": 9840, "interestRate": 4.9, "monthlyPayment": 410.00, "nextPaymentDate": "2026-07-20", "termEnd": "2028-01-15" },
+  { "id": "l3", "typeKey": "loanPersonal", "principal": 8000, "balance": 2150, "interestRate": 6.5, "monthlyPayment": 220.00, "nextPaymentDate": "2026-07-25", "termEnd": "2026-12-01" },
+  { "id": "l4", "typeKey": "loanStudent", "principal": 18000, "balance": 12300, "interestRate": 1.9, "monthlyPayment": 145.00, "nextPaymentDate": "2026-08-05", "termEnd": "2033-09-01" }
+]

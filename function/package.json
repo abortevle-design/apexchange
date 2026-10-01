@@ -1,0 +1,15 @@
+{
+  "name": "functions",
+  "description": "Firebase Cloud Functions for Apex exchange bank",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": {
+    "node": "18"
+  },
+  "dependencies": {
+    "firebase-admin": "^12.1.0",
+    "firebase-functions": "^5.0.1",
+    "resend": "^1.0.0"
+  },
+  "private": true
+}

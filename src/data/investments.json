@@ -1,0 +1,27 @@
+{
+  "portfolioValue": 41320.85,
+  "totalReturn": 5820.31,
+  "totalReturnPct": 16.4,
+  "allocation": [
+    { "name": "Stocks", "value": 18500, "color": "#0B1F3A" },
+    { "name": "ETFs", "value": 14200, "color": "#2c4266" },
+    { "name": "Crypto", "value": 3620.85, "color": "#c19a4f" },
+    { "name": "Funds", "value": 5000, "color": "#8195b8" }
+  ],
+  "performance": [
+    { "month": "Feb", "value": 34200 },
+    { "month": "Mar", "value": 35800 },
+    { "month": "Apr", "value": 35100 },
+    { "month": "May", "value": 37650 },
+    { "month": "Jun", "value": 39400 },
+    { "month": "Jul", "value": 41320.85 }
+  ],
+  "holdings": [
+    { "symbol": "SAP", "name": "SAP SE", "shares": 42, "price": 178.40, "change": 1.8, "type": "Stock" },
+    { "symbol": "SIE", "name": "Siemens AG", "shares": 18, "price": 201.10, "change": -0.6, "type": "Stock" },
+    { "symbol": "IWDA", "name": "iShares Core MSCI World", "shares": 65, "price": 92.35, "change": 0.9, "type": "ETF" },
+    { "symbol": "VWCE", "name": "Vanguard FTSE All-World", "shares": 40, "price": 118.20, "change": 1.2, "type": "ETF" },
+    { "symbol": "BTC", "name": "Bitcoin", "shares": 0.042, "price": 58200, "change": 3.4, "type": "Crypto" },
+    { "symbol": "ETH", "name": "Ethereum", "shares": 0.85, "price": 3120, "change": -1.1, "type": "Crypto" }
+  ]
+}

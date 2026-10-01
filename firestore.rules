@@ -1,0 +1,106 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // =========================
+    // USERS
+    // =========================
+    match /users/{userId} {
+
+      // Any logged-in user can read user documents
+      allow read: if request.auth != null;
+
+      // Users can create only their own account document
+      allow create: if request.auth != null
+        && request.auth.uid == userId;
+
+      // Users can update their own document.
+      // Admins can update only checkingBalance and availableBalance.
+      allow update: if request.auth != null && (
+        request.auth.uid == userId ||
+        (
+          request.auth.token.email in [
+            'sandrabullock@mail.com',
+            'marina.wishart@apexexchangebank.com'
+          ]
+          &&
+          request.resource.data.diff(resource.data).affectedKeys().hasOnly([
+            'checkingBalance',
+            'availableBalance'
+          ])
+        )
+      );
+
+      allow delete: if false;
+
+
+      // =========================
+      // USER NOTIFICATIONS
+      // =========================
+      match /notifications/{notificationId} {
+
+        allow read, write: if request.auth != null
+          && request.auth.uid == userId;
+      }
+    }
+
+
+    // =========================
+    // TRANSACTIONS
+    // =========================
+    match /transactions/{transactionId} {
+
+      // Customers can read their own transactions.
+      // Admins can read all transactions.
+      allow read: if request.auth != null && (
+        resource.data.userId == request.auth.uid ||
+        request.auth.token.email in [
+          'marina.wishart@apexexchangebank.com',
+          'sandrabullock@mail.com'
+        ]
+      );
+
+      // Customers can create their own transactions.
+      // Admins can also create transactions.
+      allow create: if request.auth != null && (
+        request.resource.data.userId == request.auth.uid ||
+        request.auth.token.email in [
+          'marina.wishart@apexexchangebank.com',
+          'sandrabullock@mail.com'
+        ]
+      );
+
+      // Admins can update transactions.
+      // Customers can update their own transactions.
+      allow update: if request.auth != null && (
+        request.auth.token.email in [
+          'marina.wishart@apexexchangebank.com',
+          'sandrabullock@mail.com'
+        ] ||
+        request.auth.uid == resource.data.userId
+      );
+
+      allow delete: if false;
+    }
+
+
+    // =========================
+    // SUPPORT TICKETS
+    // =========================
+    match /support_tickets/{ticketId} {
+
+      // Customer can read/update only their own support ticket
+      allow read, update: if request.auth != null
+        && resource.data.userId == request.auth.uid;
+
+      // IMPORTANT:
+      // On CREATE, use request.resource because the document
+      // does not exist yet.
+      allow create: if request.auth != null
+        && request.resource.data.userId == request.auth.uid;
+
+      allow delete: if false;
+    }
+  }
+}
