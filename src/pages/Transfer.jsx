@@ -11,7 +11,7 @@ import { calculateTotalAmount } from '../services/transferService';
 import { useAuth } from '../hooks/useAuth';
 import { printReceipt } from '../utils/receipt';
 
-const empty = { recipient: '', iban: '', bank: '', country: 'Germany', amount: '', currency: 'USD', reference: '', description: '', date: '', type: 'standard' };
+const empty = { recipient: '', routingNumber: '', iban: '', bank: '', country: 'Germany', amount: '', currency: 'USD', reference: '', description: '', date: '', type: 'standard' };
 
 export default function Transfer() {
   const { t } = useTranslation();
@@ -19,7 +19,7 @@ export default function Transfer() {
   const { user } = useAuth();
   const isDefaultUser = user?.accountNumber === (import.meta.env.VITE_ACCOUNT_NUMBER || '5320130');
   const beneficiaries = isDefaultUser ? beneficiariesData : [];
-  const { balance, submitTransfer } = useBanking();
+  const { submitTransfer } = useBanking();
   const [form, setForm] = useState(empty);
   const [step, setStep] = useState('form');
   const [pin, setPin] = useState('');
@@ -29,17 +29,25 @@ export default function Transfer() {
   const [submitError, setSubmitError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const update = (k) => (e) => setForm((f) => ({ ...f, [k]: e.target.value }));
+  const update = (k) => (e) => {
+    const val = e.target.value;
+    if (k === 'routingNumber' || k === 'iban') {
+      setForm((f) => ({ ...f, routingNumber: val, iban: val }));
+    } else {
+      setForm((f) => ({ ...f, [k]: val }));
+    }
+  };
 
   const pickBeneficiary = (b) => {
-    setForm((f) => ({ ...f, recipient: b.name, iban: b.iban, bank: b.bank }));
+    const routingVal = b.routingNumber || b.iban || '';
+    setForm((f) => ({ ...f, recipient: b.name, routingNumber: routingVal, iban: routingVal, bank: b.bank }));
   };
 
   const transferFee = useMemo(() => calculateTotalAmount(form.amount || 0) - Number(form.amount || 0), [form.amount]);
   const totalAmount = useMemo(() => calculateTotalAmount(form.amount || 0), [form.amount]);
 
   const handleContinue = () => {
-    if (!form.recipient || !form.iban || !form.amount) {
+    if (!form.recipient || !(form.routingNumber || form.iban) || !form.amount) {
       setSubmitError('Please complete the transfer form first.');
       return;
     }
@@ -57,9 +65,11 @@ export default function Transfer() {
 
     setIsSubmitting(true);
     try {
+      const routingVal = form.routingNumber || form.iban;
       const result = await submitTransfer({
         recipient: form.recipient,
-        iban: form.iban,
+        routingNumber: routingVal,
+        iban: routingVal,
         bank: form.bank || 'Apex exchange bank',
         amount: form.amount,
         reference: form.reference,
@@ -79,7 +89,8 @@ export default function Transfer() {
         time: result.time,
         fee: result.fee,
         totalAmount: result.totalAmount,
-        iban: form.iban,
+        routingNumber: routingVal,
+        iban: routingVal,
         senderAccount: user?.accountNumber,
         senderName: `${user?.firstName} ${user?.lastName}`,
         currency: form.currency || 'USD'
@@ -133,7 +144,14 @@ export default function Transfer() {
                 className="grid grid-cols-1 sm:grid-cols-2 gap-4"
               >
                 <Field label={t('transfer.recipient')} value={form.recipient} onChange={update('recipient')} required span2 />
-                <Field label={t('transfer.iban')} value={form.iban} onChange={update('iban')} required mono />
+                <Field
+                  label={t('transfer.routingNumber', 'Routing Number')}
+                  value={form.routingNumber || form.iban}
+                  onChange={update('routingNumber')}
+                  placeholder="e.g. 021000021"
+                  required
+                  mono
+                />
                 <Field label={t('transfer.bank')} value={form.bank} onChange={update('bank')} />
                 <Field label={t('transfer.country')} value={form.country} onChange={update('country')} />
                 <Field label={t('transfer.amount')} value={form.amount} onChange={update('amount')} type="number" required mono />
@@ -163,7 +181,7 @@ export default function Transfer() {
               <div className="space-y-1 mb-6">
                 {[
                   [t('transfer.recipient'), form.recipient],
-                  [t('transfer.iban'), form.iban],
+                  [t('transfer.routingNumber', 'Routing Number'), form.routingNumber || form.iban],
                   [t('transfer.bank'), form.bank || '—'],
                   ['Amount', formatMoney(Number(form.amount || 0), form.currency)],
                   ['Transfer Fee', formatMoney(transferFee, form.currency)],
@@ -233,6 +251,7 @@ export default function Transfer() {
                 <div className="rounded-2xl border border-gold-500/20 bg-gold-500/5 p-4 text-left space-y-2 mb-6 text-sm">
                   <div className="flex justify-between"><span className="text-navy-500">Reference Number</span><span className="font-medium text-navy-900 dark:text-white">{successData?.referenceNumber}</span></div>
                   <div className="flex justify-between"><span className="text-navy-500">Recipient</span><span className="font-medium text-navy-900 dark:text-white">{successData?.recipient}</span></div>
+                  <div className="flex justify-between"><span className="text-navy-500">Routing Number</span><span className="font-medium text-navy-900 dark:text-white">{successData?.routingNumber || successData?.iban}</span></div>
                   <div className="flex justify-between"><span className="text-navy-500">Bank</span><span className="font-medium text-navy-900 dark:text-white">{successData?.bank}</span></div>
                   <div className="flex justify-between"><span className="text-navy-500">Status</span><span className="font-semibold text-gold-600">Pending</span></div>
                 </div>

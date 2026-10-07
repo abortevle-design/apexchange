@@ -41,9 +41,9 @@ export default function Dashboard() {
   const investmentBalance = user ? (user.investmentBalance ?? 0) : 0;
   
   const upcoming = isDefaultUser ? [
-    { id: 'u1', name: 'Rundfunkbeitrag', date: '2026-07-15', amount: 18.36 },
-    { id: 'u2', name: 'E.ON Energie', date: '2026-07-18', amount: 84.2 },
-    { id: 'u3', name: 'Allianz Versicherung', date: '2026-07-22', amount: 62.5 },
+    { id: 'u1', name: 'Public Broadcasting Fee', date: '2026-12-12', amount: 18.36 },
+    { id: 'u2', name: 'E.ON Energy', date: '2026-12-15', amount: 84.2 },
+    { id: 'u3', name: 'Allianz Insurance', date: '2026-12-18', amount: 62.5 },
   ] : [];
 
   const monthlyIncome = isDefaultUser ? 5240.0 : 0.0;
