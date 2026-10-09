@@ -135,6 +135,7 @@
     "title": "Transfer Money",
     "subtitle": "Send money securely to any bank in the SEPA area",
     "recipient": "Recipient name",
+    "accountNumber": "Account Number",
     "routingNumber": "Routing Number",
     "iban": "Routing Number",
     "bank": "Bank",

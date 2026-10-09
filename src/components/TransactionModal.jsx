@@ -30,8 +30,16 @@ export default function TransactionModal({ transaction, onClose }) {
 
   rows.push([t('transactions.receiver'), cleanBankName(tx.beneficiaryName || tx.receiver)]);
 
-  if (tx.beneficiaryAccount) {
+  if (tx.accountNumber) {
+    rows.push(['Account Number', tx.accountNumber]);
+  } else if (tx.beneficiaryAccount && tx.beneficiaryAccount !== tx.routingNumber) {
     rows.push(['Beneficiary Account', tx.beneficiaryAccount]);
+  }
+
+  if (tx.routingNumber) {
+    rows.push(['Routing Number', tx.routingNumber]);
+  } else if (!tx.accountNumber && tx.beneficiaryAccount) {
+    rows.push(['Routing Number', tx.beneficiaryAccount]);
   }
 
   rows.push(

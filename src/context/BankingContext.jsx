@@ -441,6 +441,7 @@ export function BankingProvider({ children }) {
   const submitTransfer = useCallback(
     async ({
       recipient,
+      accountNumber,
       routingNumber,
       iban,
       bank,
@@ -597,7 +598,10 @@ export function BankingProvider({ children }) {
               bank || 'Apex exchange bank',
 
             beneficiaryAccount:
-              routingNumber || iban,
+              accountNumber || routingNumber || iban,
+
+            accountNumber:
+              accountNumber || '',
 
             routingNumber:
               routingNumber || iban,
@@ -724,7 +728,11 @@ export function BankingProvider({ children }) {
         date,
         time,
         fee,
-        totalAmount
+        totalAmount,
+        accountNumber:
+          accountNumber || '',
+        routingNumber:
+          routingNumber || iban
       };
     },
     [user]

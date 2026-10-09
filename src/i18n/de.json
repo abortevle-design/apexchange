@@ -135,6 +135,7 @@
     "title": "Geld überweisen",
     "subtitle": "Senden Sie Geld sicher an jede Bank im SEPA-Raum",
     "recipient": "Name des Empfängers",
+    "accountNumber": "Kontonummer",
     "routingNumber": "Routing-Nummer",
     "iban": "Routing-Nummer",
     "bank": "Bank",

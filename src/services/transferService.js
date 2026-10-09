@@ -102,7 +102,7 @@ export function generateReferenceNumber() {
   return `TRX-${Math.floor(100000 + Math.random() * 900000)}`;
 }
 
-export function createTransferTransaction({ recipient, amount, bank, referenceNumber, balanceAfter, date, time, fee, totalAmount, currency = 'USD' }) {
+export function createTransferTransaction({ recipient, accountNumber, routingNumber, amount, bank, referenceNumber, balanceAfter, date, time, fee, totalAmount, currency = 'USD' }) {
   return {
     id: `tx-${Date.now()}`,
     date,
@@ -116,6 +116,10 @@ export function createTransferTransaction({ recipient, amount, bank, referenceNu
     merchant: 'Bank Transfer',
     sender: 'Sandra Bullock',
     receiver: recipient,
+    beneficiaryName: recipient,
+    beneficiaryAccount: accountNumber || routingNumber || '',
+    accountNumber: accountNumber || '',
+    routingNumber: routingNumber || '',
     bank,
     type: 'debit',
     balanceAfter,

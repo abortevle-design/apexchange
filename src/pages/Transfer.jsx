@@ -11,7 +11,7 @@ import { calculateTotalAmount } from '../services/transferService';
 import { useAuth } from '../hooks/useAuth';
 import { printReceipt } from '../utils/receipt';
 
-const empty = { recipient: '', routingNumber: '', iban: '', bank: '', country: 'Germany', amount: '', currency: 'USD', reference: '', description: '', date: '', type: 'standard' };
+const empty = { recipient: '', accountNumber: '', routingNumber: '', iban: '', bank: '', country: '', amount: '', currency: 'USD', reference: '', description: '', date: '', type: 'standard' };
 
 export default function Transfer() {
   const { t } = useTranslation();
@@ -40,14 +40,15 @@ export default function Transfer() {
 
   const pickBeneficiary = (b) => {
     const routingVal = b.routingNumber || b.iban || '';
-    setForm((f) => ({ ...f, recipient: b.name, routingNumber: routingVal, iban: routingVal, bank: b.bank }));
+    const accountVal = b.accountNumber || '';
+    setForm((f) => ({ ...f, recipient: b.name, accountNumber: accountVal, routingNumber: routingVal, iban: routingVal, bank: b.bank }));
   };
 
   const transferFee = useMemo(() => calculateTotalAmount(form.amount || 0) - Number(form.amount || 0), [form.amount]);
   const totalAmount = useMemo(() => calculateTotalAmount(form.amount || 0), [form.amount]);
 
   const handleContinue = () => {
-    if (!form.recipient || !(form.routingNumber || form.iban) || !form.amount) {
+    if (!form.recipient || !form.accountNumber || !(form.routingNumber || form.iban) || !form.amount) {
       setSubmitError('Please complete the transfer form first.');
       return;
     }
@@ -68,6 +69,7 @@ export default function Transfer() {
       const routingVal = form.routingNumber || form.iban;
       const result = await submitTransfer({
         recipient: form.recipient,
+        accountNumber: form.accountNumber,
         routingNumber: routingVal,
         iban: routingVal,
         bank: form.bank || 'Apex exchange bank',
@@ -80,6 +82,7 @@ export default function Transfer() {
 
       setSuccessData({
         recipient: form.recipient,
+        accountNumber: form.accountNumber,
         bank: form.bank || 'Apex exchange bank',
         amount: Number(form.amount),
         referenceNumber: result.referenceNumber,
@@ -145,6 +148,14 @@ export default function Transfer() {
               >
                 <Field label={t('transfer.recipient')} value={form.recipient} onChange={update('recipient')} required span2 />
                 <Field
+                  label={t('transfer.accountNumber', 'Account Number')}
+                  value={form.accountNumber}
+                  onChange={update('accountNumber')}
+                  placeholder="e.g. 123456789"
+                  required
+                  mono
+                />
+                <Field
                   label={t('transfer.routingNumber', 'Routing Number')}
                   value={form.routingNumber || form.iban}
                   onChange={update('routingNumber')}
@@ -153,7 +164,7 @@ export default function Transfer() {
                   mono
                 />
                 <Field label={t('transfer.bank')} value={form.bank} onChange={update('bank')} />
-                <Field label={t('transfer.country')} value={form.country} onChange={update('country')} />
+                {/* <Field label={t('transfer.country')} value={form.country} onChange={update('country')} /> */}
                 <Field label={t('transfer.amount')} value={form.amount} onChange={update('amount')} type="number" required mono />
                 <div>
                   <label className="block text-xs font-medium text-navy-400 mb-1.5">{t('transfer.transferType')}</label>
@@ -181,6 +192,7 @@ export default function Transfer() {
               <div className="space-y-1 mb-6">
                 {[
                   [t('transfer.recipient'), form.recipient],
+                  [t('transfer.accountNumber', 'Account Number'), form.accountNumber],
                   [t('transfer.routingNumber', 'Routing Number'), form.routingNumber || form.iban],
                   [t('transfer.bank'), form.bank || '—'],
                   ['Amount', formatMoney(Number(form.amount || 0), form.currency)],
@@ -251,6 +263,7 @@ export default function Transfer() {
                 <div className="rounded-2xl border border-gold-500/20 bg-gold-500/5 p-4 text-left space-y-2 mb-6 text-sm">
                   <div className="flex justify-between"><span className="text-navy-500">Reference Number</span><span className="font-medium text-navy-900 dark:text-white">{successData?.referenceNumber}</span></div>
                   <div className="flex justify-between"><span className="text-navy-500">Recipient</span><span className="font-medium text-navy-900 dark:text-white">{successData?.recipient}</span></div>
+                  <div className="flex justify-between"><span className="text-navy-500">Account Number</span><span className="font-medium text-navy-900 dark:text-white">{successData?.accountNumber}</span></div>
                   <div className="flex justify-between"><span className="text-navy-500">Routing Number</span><span className="font-medium text-navy-900 dark:text-white">{successData?.routingNumber || successData?.iban}</span></div>
                   <div className="flex justify-between"><span className="text-navy-500">Bank</span><span className="font-medium text-navy-900 dark:text-white">{successData?.bank}</span></div>
                   <div className="flex justify-between"><span className="text-navy-500">Status</span><span className="font-semibold text-gold-600">Pending</span></div>

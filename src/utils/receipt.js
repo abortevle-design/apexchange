@@ -251,10 +251,23 @@ export function printReceipt(tx) {
               <span class="label">Beneficiary Name</span>
               <span class="value">${beneficiaryName}</span>
             </div>
+            ${tx.accountNumber ? `
+            <div class="details-row">
+              <span class="label">Account Number</span>
+              <span class="value">${tx.accountNumber}</span>
+            </div>
+            ` : ''}
+            ${tx.routingNumber ? `
+            <div class="details-row">
+              <span class="label">Routing Number</span>
+              <span class="value">${tx.routingNumber}</span>
+            </div>
+            ` : (tx.beneficiaryAccount ? `
             <div class="details-row">
               <span class="label">Beneficiary Account</span>
               <span class="value">${tx.beneficiaryAccount || tx.iban || ''}</span>
             </div>
+            ` : '')}
             <div class="details-row">
               <span class="label">Beneficiary Bank</span>
               <span class="value">${beneficiaryBank}</span>

@@ -203,7 +203,10 @@ export default function AdminPendingTransfers() {
                     </td>
                     <td className="p-4">
                       <p className="font-medium text-navy-850 dark:text-navy-100 truncate max-w-[200px]">{tx.beneficiaryBank}</p>
-                      <p className="text-xs text-navy-400 truncate max-w-[200px] font-mono">{tx.beneficiaryAccount}</p>
+                      <p className="text-xs text-navy-400 truncate max-w-[200px] font-mono">
+                        {tx.accountNumber ? `Acc: ${tx.accountNumber}` : (tx.beneficiaryAccount ? `Acc: ${tx.beneficiaryAccount}` : '')}
+                        {tx.routingNumber ? ` · RTN: ${tx.routingNumber}` : ''}
+                      </p>
                     </td>
                     <td className="p-4">
                       <p className="text-navy-800 dark:text-navy-100">{tx.date}</p>
@@ -254,6 +257,15 @@ export default function AdminPendingTransfers() {
               <div className="rounded-2xl border border-navy-150 dark:border-white/10 bg-navy-50/50 dark:bg-white/5 p-4 text-sm space-y-2">
                 <div className="flex justify-between"><span className="text-navy-400">Sender</span><span className="font-semibold text-navy-800 dark:text-white">{selectedTx.senderName}</span></div>
                 <div className="flex justify-between"><span className="text-navy-400">Recipient</span><span className="font-semibold text-navy-800 dark:text-white">{selectedTx.beneficiaryName}</span></div>
+                {selectedTx.accountNumber && (
+                  <div className="flex justify-between"><span className="text-navy-400">Account Number</span><span className="font-semibold text-navy-800 dark:text-white font-mono">{selectedTx.accountNumber}</span></div>
+                )}
+                {selectedTx.routingNumber && (
+                  <div className="flex justify-between"><span className="text-navy-400">Routing Number</span><span className="font-semibold text-navy-800 dark:text-white font-mono">{selectedTx.routingNumber}</span></div>
+                )}
+                {selectedTx.beneficiaryBank && (
+                  <div className="flex justify-between"><span className="text-navy-400">Bank</span><span className="font-semibold text-navy-800 dark:text-white">{selectedTx.beneficiaryBank}</span></div>
+                )}
                 <div className="flex justify-between"><span className="text-navy-400">Amount</span><span className="font-bold text-navy-900 dark:text-white">{formatMoney(Math.abs(selectedTx.amount), selectedTx.currency)}</span></div>
                 <div className="flex justify-between"><span className="text-navy-400">Fee (1%)</span><span className="font-medium text-navy-800 dark:text-white">{formatMoney(selectedTx.transferFee || selectedTx.fee || 0, selectedTx.currency)}</span></div>
                 <div className="flex justify-between border-t border-navy-100 dark:border-white/10 pt-2"><span className="text-navy-400 font-semibold">Total Debit</span><span className="font-bold text-gold-600">{formatMoney(selectedTx.totalAmount || (Math.abs(selectedTx.amount) + (selectedTx.fee || 0)), selectedTx.currency)}</span></div>
