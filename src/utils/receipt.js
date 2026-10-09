@@ -293,7 +293,7 @@ export function printReceipt(tx) {
           <div class="footer">
             <h4 class="support-title">Apex exchange bank Support</h4>
             <p class="support-text">
-              If you have any questions regarding this transfer, please contact support via the Help Center or call +49 (0) 30 2004-0.
+              If you have any questions regarding this transfer, please contact support via the Help Center or call +1 (548) 829 1940.
             </p>
           </div>
 
